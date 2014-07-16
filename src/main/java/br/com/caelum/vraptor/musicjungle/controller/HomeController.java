@@ -16,18 +16,11 @@
  */
 package br.com.caelum.vraptor.musicjungle.controller;
 
-import javax.inject.Inject;
-
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.actioncache.Cached;
-import br.com.caelum.vraptor.musicjungle.dao.DefaultUserDao;
-import br.com.caelum.vraptor.musicjungle.dao.UserDao;
 import br.com.caelum.vraptor.musicjungle.interceptor.Public;
-import br.com.caelum.vraptor.musicjungle.interceptor.UserInfo;
-import br.com.caelum.vraptor.validator.Validator;
 
 /**
  * This class will be responsible to login/logout users.
@@ -40,24 +33,9 @@ import br.com.caelum.vraptor.validator.Validator;
 @Controller
 public class HomeController {
 
-    private Result result;
-    private UserInfo userInfo;
-
 	//CDI eyes only
 	@Deprecated
 	public HomeController() {}
-
-	/**
-	 * You can receive any dependency on constructor. If VRaptor knows all dependencies, this
-	 * class will be created with no problem. You can use as dependencies:
-	 * - all VRaptor components, e.g {@link Result} and {@link Validator}
-	 * - all of your CDI classes, e.g {@link DefaultUserDao}
-	 */
-	@Inject
-	public HomeController(UserInfo userInfo, Result result) {
-		this.result = result;
-        this.userInfo = userInfo;
-	}
 
 	/**
 	 * Using the convention, the URI for this method is
@@ -80,8 +58,9 @@ public class HomeController {
 	}
 	
 	@Public
+	@Cached(key="homeindex",duration=30)
 	public void index(){
-		System.out.println("Passando por aqui...");
+		System.out.println("Accessing...");
 	}
 
 }
